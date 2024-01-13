@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { HousingLocation } from './housinglocation';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HousingService {
-
   readonly baseUrl = 'https://angular.io/assets/images/tutorials/faa';
-
+  url = 'http://localhost:3000/locations';
 
   housingLocationList: HousingLocation[] = [
     {
@@ -112,13 +111,22 @@ export class HousingService {
     },
   ];
 
-  getAllHousingLocations(): HousingLocation[] {
-    return this.housingLocationList;
+  async getAllHousingLocations(): Promise<HousingLocation[]> {
+    const data = await fetch(this.url);
+    return (await data.json()) ?? [];
   }
 
-  getHousingLocationById(id: number): HousingLocation | undefined {
-    return this.housingLocationList.find(housingLocation => housingLocation.id  === id)
+  async getHousingLocationById(
+    id: number
+  ): Promise<HousingLocation | undefined> {
+    const data = await fetch(`${this.url}/${id}`);
+
+    return (await data.json()) ?? {};
   }
 
-  constructor() { }
+  submitApplication(firstName: string, lastName: string, email: string) {
+    console.log(
+      `homes application received firstName : ${firstName}, last name: ${lastName}, email: ${email}`
+    );
+  }
 }
