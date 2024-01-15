@@ -3,11 +3,12 @@ import { Component, Inject, inject } from '@angular/core';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { HousingLocation } from '../housinglocation';
 import { HousingService } from '../housing.service';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HousingLocationComponent],
+  imports: [CommonModule, HousingLocationComponent,ButtonComponent],
   template: `
     <section>
       <form>
@@ -21,6 +22,7 @@ import { HousingService } from '../housing.service';
         </button>
       </form>
     </section>
+   
     <section class="results">
       <app-housing-location
         *ngFor="let housingLocation of filteredLocationList"
